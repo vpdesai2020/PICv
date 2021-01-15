@@ -1,0 +1,6 @@
+requests==2.23.0
+pandas==0.24.2
+matplotlib==2.2.5
+numpy==1.13.3
+pymol==0.1.0
+scikit_learn==0.23.2
