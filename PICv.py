@@ -59,7 +59,7 @@ def check():
         mo = uniprot_id_val.search(Entry1.get())
         if mo is not None:
             if not len(Entry2.get()) == 0:
-                function()   
+                function()  
             else:
                 text_label_2.configure(text='''Please enter Clusters''')
         else:
@@ -190,7 +190,7 @@ def function(*args, **kw):
             silhouette_scores_by_cluster_dict[n_clusters] = silhouette_avg
             print("For n_clusters =", n_clusters,
                     "The average silhouette_score is :", silhouette_avg)
-            message_2.configure(text="For n_clusters = "+str(n_clusters)+
+            Label2.configure(text="For n_clusters = "+str(n_clusters)+
                     "The average silhouette_score is : "+str(silhouette_avg))
 
         # Find the optimal value of k (number of clusters) based on silhouette scores computed
@@ -311,7 +311,9 @@ def function(*args, **kw):
 
     # filename = input('Enter pdb filename: ')
     #load the pdb file and name object as protein for further manipulation
-    cmd.load(load_protein, 'protein')
+    # cmd.load(load_protein, 'protein')
+    cmd.load(load_protein, acc_id)
+    
     #Hide all representations, then show the surface representation in white colour
     cmd.hide()
     cmd.show("surface")
@@ -357,23 +359,23 @@ def function(*args, **kw):
     cmd.disable(selection_name)
     Label2.configure(text=''' ''')
     Button3.configure(text='''Try again''')
-    plot_clusters()
+    # plot_clusters()
     # New feature-----------------------------------------
     
-    # # Compute optimal number of clusters to be used
-    # # Define a list with the different k-values to be compared
-    # # The maximum number of clusters possible is n_samples - 1. Take the minimum of this and the fixed upper range desired.
-    # n_samples = X.shape[0]
-    # range_n_clusters = np.arange(2, min(n_samples, 16))
-    # # Call the function that calculates silhouette scores for different values of k and returns the optimal number of clusters
-    # optimal_k = compute_optimal_k(range_n_clusters)
-    # # optimal_k = compute_optimal_k()
+    # Compute optimal number of clusters to be used
+    # Define a list with the different k-values to be compared
+    # The maximum number of clusters possible is n_samples - 1. Take the minimum of this and the fixed upper range desired.
+    n_samples = X.shape[0]
+    range_n_clusters = np.arange(2, min(n_samples, 16))
+    # Call the function that calculates silhouette scores for different values of k and returns the optimal number of clusters
+    optimal_k = compute_optimal_k(range_n_clusters)
     # # Plot the Elbow Coefficient graph used to visually determine the optimal number of clusters
     # # plot_elbow_coefficient_graph(range_n_clusters)
     # # plot_elbow_coefficient_graph()
-    # print("Optimal number of clusters: ", optimal_k)
-    # message_2.configure(text="For n_clusters = "+optimal_k)
-    
+    print("Optimal number of clusters: ", optimal_k)
+    text_label_2.configure(text='''Optimal number of clusters: '''+str(optimal_k))
+    # text_label_2.configure(text="Optimal number of clusters:  "+str(optimal_k))
+    plot_clusters()
     # # --------------------------------------------------
 
     
@@ -431,7 +433,7 @@ def validation(*args, **kw):
 # -------------------GUI--------------------------------------------------
 
 def mytkdialog(parent):
-    global Entry1,text_label_1,Entry2,message_1,Label2,Button3,Button2,Checkbutton2,Labelframe2,cluster,message_2
+    global Entry1,text_label_1,Entry2,message_1,Label2,Button3,Button2,Checkbutton2,Labelframe2,cluster,message_2,text_label_2
 
     window=tk.Tk()
     window.geometry("800x500+351+150")
