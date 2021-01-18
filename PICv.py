@@ -16,6 +16,7 @@ import pandas as pd
 import sys
 import numpy as np
 
+
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn.metrics import silhouette_score
@@ -42,9 +43,6 @@ try:
 except ImportError:
     import tkinter.filedialog
     import tkinter.messagebox
-
-
-
 
 
 def open_file():
@@ -246,7 +244,7 @@ def function(*args, **kw):
 
         point_colors = np.array([center_colors[cluster_map.loc[p].tolist()[0]] for p in proteins])
         ax.scatter(reduced_data[len(cluster_indices):, 0], reduced_data[len(cluster_indices):, 1], c = point_colors, marker = 'o',alpha=0.7,cmap=colours)
-
+        ax.legend()
         #plt.xlim(x_axis_min,x_axis_max)
         #plt.ylim(y_axis_min,y_axis_max)
 
@@ -373,7 +371,7 @@ def function(*args, **kw):
     # # plot_elbow_coefficient_graph(range_n_clusters)
     # # plot_elbow_coefficient_graph()
     print("Optimal number of clusters: ", optimal_k)
-    text_label_2.configure(text='''Optimal number of clusters: '''+str(optimal_k))
+    text_label_2.configure(text='''Optimal number of clusters: '''+str(optimal_k),foreground="green")
     # text_label_2.configure(text="Optimal number of clusters:  "+str(optimal_k))
     plot_clusters()
     # # --------------------------------------------------
@@ -403,7 +401,7 @@ def validation(*args, **kw):
         time.sleep(0.01)
         response = requests.get(url)
         if response.status_code == 200:
-            text_label_1.configure(text='''Valid uniprot ID''')
+            text_label_1.configure(text='''Valid uniprot ID''',foreground="green")
             pdb_best(acc_id)
             
             return json.loads(response.content.decode('utf-8'))  
