@@ -49,9 +49,10 @@ def open_file():
         global load_protein
         load_protein = tkFileDialog.askopenfilename(title='Open PDB File', filetypes=(("pdb files", "*.pdb"),))
         Label2.configure(text="Uploaded file : "+load_protein)
-        # Button2=uploaded_pdb
+       
         
 def check():
+    
     if not len(Entry1.get()) == 0:
         uniprot_id_val = re.compile(r'([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})')
         mo = uniprot_id_val.search(Entry1.get())
@@ -69,6 +70,7 @@ def check():
 def function(*args, **kw):
     global json_response,X
     Label2.configure(text='''Running,...''')
+    
     def get_protein_info(acc_id):
         
         url = api_url + acc_id
@@ -77,7 +79,7 @@ def function(*args, **kw):
         
         if response.status_code == 200:
 
-            text_label_1.configure(text=acc_id+"  Id found ,.")
+            text_label_1.configure(text=acc_id+"  Id found")
             return json.loads(response.content.decode('utf-8'))
             
         else:
@@ -90,8 +92,6 @@ def function(*args, **kw):
     if(json_response == None):
         
         text_label_1.configure(text='Invalid uniprot ID')
-        # print("Please specify a valid uniprot ID")
-        # sys.exit()
     
     def convert_json_reponse_to_dict(json_response):
 
@@ -188,8 +188,8 @@ def function(*args, **kw):
             silhouette_scores_by_cluster_dict[n_clusters] = silhouette_avg
             print("For n_clusters =", n_clusters,
                     "The average silhouette_score is :", silhouette_avg)
-            Label2.configure(text="For n_clusters = "+str(n_clusters)+
-                    "The average silhouette_score is : "+str(silhouette_avg))
+            # Label2.configure(text="For n_clusters = "+str(n_clusters)+
+                    # "The average silhouette_score is : "+str(silhouette_avg))
 
         # Find the optimal value of k (number of clusters) based on silhouette scores computed
         # The optimal number of clusters is that which has the highest associated silhouette score
@@ -244,7 +244,7 @@ def function(*args, **kw):
 
         point_colors = np.array([center_colors[cluster_map.loc[p].tolist()[0]] for p in proteins])
         ax.scatter(reduced_data[len(cluster_indices):, 0], reduced_data[len(cluster_indices):, 1], c = point_colors, marker = 'o',alpha=0.7,cmap=colours)
-        ax.legend()
+        # ax.legend()
         #plt.xlim(x_axis_min,x_axis_max)
         #plt.ylim(y_axis_min,y_axis_max)
 
@@ -304,12 +304,7 @@ def function(*args, **kw):
     api=json.loads(api_request.content)
     api=api[acc_id][0]['pdb_id']
     load_protein="https://files.rcsb.org/download/"+api+".pdb"
-    
-    # load_protein='https://files.rcsb.org/download/4hhb.pdb'
 
-    # filename = input('Enter pdb filename: ')
-    #load the pdb file and name object as protein for further manipulation
-    # cmd.load(load_protein, 'protein')
     cmd.load(load_protein, acc_id)
     
     #Hide all representations, then show the surface representation in white colour
@@ -376,12 +371,6 @@ def function(*args, **kw):
     plot_clusters()
     # # --------------------------------------------------
 
-    
-    # exit
-    # cmd.quit()
-    
-# def disable_enable_button():
-#         Button2.configure(state=DISABLED if value_check.get() else NORMAL)
 
 def check_val():
     if not len(Entry1.get()) == 0:
